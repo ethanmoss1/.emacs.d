@@ -1,0 +1,16 @@
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+*.elc
+auto-save-list
+tramp
+.\#*
+
+/eshell/history
+/eshell/lastdir
+/elpa/
+/server/
+/network-security.data
+/elpaca/
+/eln-cache/
+customfile.el
