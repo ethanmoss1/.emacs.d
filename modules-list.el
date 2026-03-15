@@ -19,6 +19,7 @@
    "modeline"
 
    ;; -- Programming Modules --
+   "rainbow"
    "eglot"
    "nix"
 

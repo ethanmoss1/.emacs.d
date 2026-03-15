@@ -20,30 +20,30 @@
 
 ;;; Code:
 
-(defun nixos-edit-config ()
-  "Edit the nixos config file"
-  (interactive)
-  (if (string= my-hostname "mac")
-      (find-file "/Users/ethan/.config/nix-darwin")
-    (find-file "/home/ethan/.config/nixos")))
+;; (defun nixos-edit-config ()
+;;   "Edit the nixos config file"
+;;   (interactive)
+;;   (if (string= my-hostname "mac")
+;;       (find-file "/Users/ethan/.config/nix-darwin")
+;;     (find-file "/home/ethan/.config/nixos")))
 
 ;; Run a nice buffer with the output of the nix rebuild
 ;; TODO: move the directory of the nix files to a variable that can change
-(defun nixos-rebuild-config ()
-  "Rebuild the system nixos rebuild"
-  (interactive)
-  (pcase my-hostname
-    ("mac"   (compile "darwin-rebuild switch --flake /Users/ethan/.config/nix-darwin" t))
-    ("laptop" (let ((default-directory "/sudo::"))
-                (compile "nixos-rebuild switch --flake /home/ethan/.config/nixos")))
-    (_       (message "No compile command for this host: %s" my-hostname))))
+;; (defun nixos-rebuild-config ()
+;;   "Rebuild the system nixos rebuild"
+;;   (interactive)
+;;   (pcase my-hostname
+;;     ("mac"   (compile "darwin-rebuild switch --flake /Users/ethan/.config/nix-darwin" t))
+;;     ("laptop" (let ((default-directory "/sudo::"))
+;;                 (compile "nixos-rebuild switch --flake /home/ethan/.config/nixos")))
+;;     (_       (message "No compile command for this host: %s" my-hostname))))
 
-(add-to-list 'display-buffer-alist
-			 '("^*comp"
-               (display-buffer-reuse-window display-buffer-below-selected)
-               (window-height . 0.33)
-               (window-parameters
-                (no-delete-other-windows . t))))
+;; (add-to-list 'display-buffer-alist
+;; 			 '("^*comp"
+;;                (display-buffer-reuse-window display-buffer-below-selected)
+;;                (window-height . 0.33)
+;;                (window-parameters
+;;                 (no-delete-other-windows . t))))
 
 (use-package nix-mode
   ;; :hook (nix-mode . lsp-deferred) ;; So that envrc can load
@@ -59,6 +59,3 @@
   )
 
 ;;; nix.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

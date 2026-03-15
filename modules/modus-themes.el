@@ -31,7 +31,7 @@
 		  modus-themes-bold-constructs t
 		  modus-themes-org-blocks 'tinted-background
           modus-themes-variable-pitch-ui nil
-          )
+          modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
   (setopt modus-themes-common-palette-overrides
           '(;; Make the `tab-bar-mode' mode subtle while keepings its
             ;; original grey aesthetic.
@@ -42,7 +42,7 @@
             ;; Make the fringe invisible
             (fringe unspecified)))
 
-  (load-theme 'modus-vivendi t))
+  (load-theme 'modus-vivendi-tinted t))
 
 ;;; modus-themes.el ends here -------------------------------------------------
 ;; Local Variables:
