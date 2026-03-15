@@ -29,7 +29,9 @@
   :ensure nil
   :config
   (electric-quote-mode t)
-  (electric-pair-mode t))
+  (electric-pair-mode t)
+  (electric-layout-mode t)
+  (electric-indent-mode t))
 
 ;;; electric.el ends here
 ;; Local Variables:

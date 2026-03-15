@@ -31,7 +31,6 @@
 
   ;; display buffer position
   (add-to-list 'display-buffer-alist
-               ;; *shell*  *eshell*  *eat*
                '("^\\*Calendar\\*"
                  (display-buffer-in-side-window)
                  (side . bottom)

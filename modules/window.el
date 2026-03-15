@@ -27,41 +27,8 @@
 (use-package window
   :ensure nil
   :config
-  ;; Respect display actions specified. eg, in ‘display-buffer-alist’
-  (setopt switch-to-buffer-obey-display-actions t)
-  (setopt switch-to-buffer-in-dedicated-window 'pop)
-  ;; (setopt display-buffer-base-action '(display-buffer-same-window))  ; default nil
-
-  (setopt split-width-threshold 170
-		  split-height-threshold nil)
-
-  ;; resizing windows
-  (setopt window-resize-pixelwise t
-	      resize-mini-windows 'grow-only)
-
-  ;; Window divider on EXWM
-  ;; (if (string= my-hostname "laptop")
-  ;; (add-hook 'elpaca-after-init-hook window-divider-mode))
-
-  ;; and its settings
   (setopt window-divider-default-places t
 	      window-divider-default-right-width 2
 	      window-divider-default-bottom-width 2)
 
-  ;; helper to make a window a dedicated one.
-  (defun my/make-window-dedicated-toggle ()
-    "Toggles the selected window, making it dedicated."
-    (interactive)
-    (let ((is-dedicated (window-dedicated-p (selected-window))))
-	  (set-window-dedicated-p (selected-window) (not is-dedicated))
-	  (message "Window dedicated: %s" (not is-dedicated))))
-
-  (defun my/reset-frame-window-state ()
-    "For when experementing with window states."
-    (interactive)
-    (set-frame-parameter (selected-frame) 'window-state nil)))
-
 ;;; window.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

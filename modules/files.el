@@ -37,7 +37,6 @@
   ;; Skip confirmation prompts when creating a new file or buffer
   (setq confirm-nonexistent-file-or-buffer nil)
 
-
   ;; Avoid generating backups or lockfiles to prevent creating world-readable
   ;; copies of files.
   (setq create-lockfiles nil

@@ -18,10 +18,6 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary:
-
-;;
-
 ;;; Code:
 
 (use-package emacs
@@ -30,35 +26,14 @@
   (when (>= emacs-major-version 31)
     ;; see `mode-line-collapse-minor-modes’ for more information
     ;; Hide some modes
-    (setopt mode-line-collapse-minor-modes '(abbrev-mode flyspell-mode flyspell-prog-mode eldoc-mode))
+    (setopt mode-line-collapse-minor-modes '(abbrev-mode
+					     flyspell-mode
+					     flyspell-prog-mode
+					     eldoc-mode
+					     auto-revert-mode))
     ;; Hide all modes
     ;; (setopt mode-line-collapse-minor-modes '(not))
-    )
-  ;; (setopt mode-line-format '("%e"
-  ;;                            mode-line-front-space
-  ;;                            ;; "["
-  ;;                            (:propertize
-  ;;                             (""
-  ;;                              mode-line-mule-info
-  ;;                              mode-line-client
-  ;;                              mode-line-modified
-  ;;                              mode-line-remote
-  ;;                              mode-line-window-dedicated)
-  ;;                             display (min-width (6.0)))
-  ;;                            ;; "]"
-  ;;                            mode-line-frame-identification
-  ;;                            mode-line-buffer-identification
-  ;;                            "   "
-  ;;                            mode-line-position
-  ;;                            ;; (project-mode-line project-mode-line-format)
-  ;;                            (vc-mode vc-mode)
-  ;;                            "   "
-  ;;                            mode-line-modes
-  ;;                            mode-line-misc-info
-  ;;                            mode-line-end-spaces))
-  )
-
-
+    ))
 
 ;;; modeline.el ends here
 ;; Local Variables:

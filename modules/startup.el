@@ -32,16 +32,14 @@
 
 (use-package emacs
   :ensure nil
+  :hook (after-init . display-startup-echo-area-message)
   :config
-  (setq inhibit-startup-screen t
-        inhibit-startup-message t
-        inhibit-startup-echo-area-message t
+  (setopt inhibit-startup-screen t
+          inhibit-startup-message t
+          inhibit-startup-echo-area-message t
 
-        ;; Scratch buffer settings
-        initial-scratch-message nil
-        initial-major-mode 'org-mode))
+          ;; Scratch buffer settings
+          initial-scratch-message nil
+          initial-major-mode 'org-mode))
 
 ;;; startup.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

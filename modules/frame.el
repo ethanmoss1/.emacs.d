@@ -23,7 +23,7 @@
   :ensure nil
   :config
   ;; Frame
-  (setq frame-resize-pixelwise t)
+  ;; (setq frame-resize-pixelwise t)
 
 
   ;; Cursor

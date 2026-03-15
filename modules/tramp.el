@@ -25,7 +25,6 @@
 											     "backup"
 											     user-emacs-directory)))
         tramp-copy-size-limit 'nil ;; Use out of band copy
-
         enable-remote-dir-locals t)
 
 ;;; tramp.el ends here

@@ -18,11 +18,6 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary:
-;;
-
-;;
-
 ;;; Code:
 (use-package delsel
   :ensure nil
@@ -30,6 +25,3 @@
   (delete-selection-mode t))
 
 ;;; delsel.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

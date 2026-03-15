@@ -69,14 +69,6 @@
 
   ;; Keeps screen position if the scroll command moved it vertically out
   ;; of the window.
-  (setq scroll-preserve-screen-position t)
-
-  ;; Mac only for now, set precision scrolling, this makes Emacs feel more
-  ;; modern and makes is easier to see content as is scrolls.
-  (if (string= my-hostname "mac")
-      (pixel-scroll-precision-mode)))
+  (setq scroll-preserve-screen-position t))
 
 ;;; mouse.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

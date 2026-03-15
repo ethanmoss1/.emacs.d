@@ -28,12 +28,9 @@
 (use-package uniquify
   :ensure nil
   :config
-  (setq uniquify-buffer-name-style 'reverse
-		uniquify-separator " • "
-		uniquify-after-kill-buffer-p t
-		uniquify-ignore-buffers-re "^\\*"))
+  (setopt uniquify-buffer-name-style 'reverse
+		  uniquify-separator " • "
+		  uniquify-after-kill-buffer-p t
+		  uniquify-ignore-buffers-re "^\\*"))
 
 ;;; uniquify.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

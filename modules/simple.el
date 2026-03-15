@@ -27,12 +27,10 @@
 (use-package simple
   :ensure nil
   :config
-  (setq indent-tabs-mode nil
-                                        ; generates tabs distances at 4 spaces increments
-		tab-stop-list (number-sequence 4 120 4))
-
-  (setq line-number-mode t
-        column-number-mode t)
+  (setopt indent-tabs-mode nil  ; generates tabs distances at 4 spaces increments
+		  tab-stop-list (number-sequence 4 120 4)
+          line-number-mode t
+          column-number-mode t)
 
   ;; Enable some modes
   (indent-tabs-mode nil)

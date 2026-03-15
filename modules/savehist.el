@@ -18,22 +18,16 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary:
-
 ;;; Code:
 
 (use-package savehist
   :demand t
   :ensure nil
   :config
-  (setq savehist-autosave-interval 60
+  (setopt savehist-autosave-interval 60
 		history-length 300
         savehist-file (expand-file-name "cache/savehist" user-emacs-directory))
-
   (savehist-mode t))
 
 
 ;;; savehist.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

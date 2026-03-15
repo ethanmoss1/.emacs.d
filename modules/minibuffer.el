@@ -18,10 +18,6 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary:
-
-;;
-
 ;;; Code:
 
 ;; Don’t bother with case, its never important.
@@ -39,6 +35,3 @@
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;;; minibuffer.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

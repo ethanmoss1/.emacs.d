@@ -4,7 +4,6 @@
  '(;;;;;; ---- List of modules to load ----
    ;; -- Package manager --
    "elpaca"
-   "wait" ;; special wait and install.
 
    ;; -- Compulsory Modules --
    "vertico"
@@ -19,6 +18,43 @@
    "nerd-icons"
    "modeline"
 
-   ;; -- Version Control --
+   ;; -- Programming Modules --
+   "eglot"
+   "nix"
+
+   ;; -- Other Packages --
    "magit"
+   "eat"
+
+   ;; -- Builtin modules --
+   "dired"
+
+   ;; -- Other Builtin modules --
+   "keybindings"
+   ;; "c-code"
+   "startup"
+   "frame"
+   "mouse"
+   "widget"
+   "simple"
+   "electric"
+   "font-core"
+   "saveplace"
+   "subr"
+   "files"
+   "delsel"
+   "paren"
+   "uniquify"
+   "recentf"
+   "savehist"
+   "auto-insert"
+   "ibuffer"
+   "window"
+   "tramp"
+   "minibuffer"
+   "calendar"
+   "winner"
+   "ediff"
+   "dictionary"
+   "project"
    )) ;; -- End of Modules --

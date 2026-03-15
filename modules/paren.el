@@ -18,11 +18,6 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary:
-;;
-
-;;
-
 ;;; Code:
 (use-package paren
   :ensure nil
@@ -39,8 +34,4 @@
   ;; Don't blink the paren matching the one at point, it's too distracting.
   (setq blink-matching-paren nil))
 
-
 ;;; paren.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

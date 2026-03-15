@@ -27,32 +27,6 @@
 
 ;;; Code:
 
-(defun my/move-beginning-of-line ()
-  "Go to beginning of line or to first non-whitespace character
-depending on current position of point
-
-https://www.reddit.com/r/emacs/comments/1i1sv9u/comment/m7o54ko/"
-  (interactive)
-  (let ((pos (current-column)))
-    (back-to-indentation)
-    (if (and (<= pos (current-column)) (not (= pos 0)))
-        (move-beginning-of-line 1))))
-
-(defun my/setup-dashboard-tabs ()
-  "macro? it sets up notmuch, elfeed and agenda quickly"
-  (interactive)
-  ;; close all windows and tabs for a clean slate
-  (delete-other-windows)
-  (tab-bar-mode 1)
-  (tab-close-other)
-  ;; open new tabs and programs
-  (my/org-agenda-with-groups)
-  (tab-new)
-  (notmuch)
-  (tab-new)
-  (elfeed)
-  (elfeed-update))
-
 (defun split-window-below-and-focus (&optional arg)
   (interactive "P")
   (split-window-below)
@@ -69,11 +43,15 @@ https://www.reddit.com/r/emacs/comments/1i1sv9u/comment/m7o54ko/"
   (if arg
       (consult-buffer)))
 
-(when (string-equal my-hostname "laptop")
+(when (or (string-equal my-hostname "macbook")
+          (string-equal my-hostname "thinkpad"))
   ;; Set the default keyboard state
   (setq my/laptop-keyboard-enabled t)
   ;; The name of the internal keyboard;
-  (setq my/laptop-keyboard-name "Apple Inc. Apple Internal Keyboard / Trackpad")
+  (setq my/laptop-keyboard-name (pcase my-hostname
+                                  ("macbook" "Apple Inc. Apple Internal Keyboard / Trackpad")
+                                  ("thinkpad" "AT Translated Set 2 Keyboard")))
+
   ;; Get the ID of the internal keyboard
   (setq my/laptop-keyboard-id (string-to-number (shell-command-to-string (format "xinput list --id-only 'keyboard:%s'" my/laptop-keyboard-name))))
 
@@ -88,32 +66,6 @@ https://www.reddit.com/r/emacs/comments/1i1sv9u/comment/m7o54ko/"
                              ))
       (setq my/laptop-keyboard-enabled (not my/laptop-keyboard-enabled))
       (message "Internal Laptop keyboard: %s" kb-enable))))
-
-;;; -- Follow link or symbol at point --
-;; OBSOLETE BY EMBARK
-;; (defun my/follow-at-point ()
-;;   "Performs a context-aware action based on the text at point."
-;;   (interactive)
-;;   ;; Thing at point? symbol, list, sexp, defun, filename, existing-filename,
-;;   ;; url, email, uuid, word, sentence, whitespace, line, number, face and page.
-;;   ;; Get the current thing at point.
-;;   (let* ((url (thing-at-point 'url t)) ; change to `when-let*’?
-;;          (email (thing-at-point 'email t))
-;;          (possible-file (thing-at-point 'filename t))
-;;          (file (when (and (stringp possible-file)
-;;                           (file-exists-p possible-file))
-;;                  possible-file))
-;;          (symbol (thing-at-point 'symbol t))
-;;          )
-;;     (cond
-;;      ;; http://example.com
-;;      (url (browse-url url))
-;;      ;; info@somedomain.co.uk
-;;      (email (notmuch-mua-mail email))
-;;      ;; /home/ethan/todo.org or todo.org
-;;      (file (find-file file))
-;;      (symbol (xref-find-definitions symbol))
-;;      (t (message "unknown ’thing’ at point.")))))
 
 (defun my/indent-whole-buffer ()
   "Indent the entire buffer without affecting point or mark."

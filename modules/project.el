@@ -29,6 +29,7 @@
 (use-package project
   :ensure nil
   :config
+
   (defgroup project-local nil
     "Local, non-VC-backed project.el root directories."
     :group 'project)
@@ -57,6 +58,3 @@
   (setopt project-find-functions '(project-try-vc project-local-try-local)))
 
 ;;; project.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
