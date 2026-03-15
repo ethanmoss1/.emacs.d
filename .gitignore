@@ -15,4 +15,7 @@ projects
 /network-security.data
 /elpaca/
 /eln-cache/
+/cache/
 custom-file.el
+/recentf
+/transient/
