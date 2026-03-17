@@ -93,10 +93,6 @@ Provide is removed as this is not a normal lisp file."
     (mark-marker)
     (replace-regexp "\n\n\(provide '.*\)" "")
     (insert (format "(use-package %s)\n" module-name))
-    (goto-char (point-max))
-    (insert ";; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:")
     (goto-char (mark-marker))
     (normal-mode)))
 
