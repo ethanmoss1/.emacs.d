@@ -32,7 +32,8 @@
 
    ;; -- Other Builtin modules --
    "keybindings"
-   ;; "c-code"
+   "repeat"
+   "c-code"
    "startup"
    "frame"
    "mouse"

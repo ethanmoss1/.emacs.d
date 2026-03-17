@@ -38,7 +38,7 @@
   (setq scroll-margin 4                               ; Scroll when x lines from window boundary.
         scroll-step 0                                 ; scroll amount
         scroll-conservatively most-positive-fixnum    ; dont want to jumps around
-        use-dialog-box nil                 ; Dont want GUI popups
+        use-dialog-box nil                            ; Dont want GUI popups
         frame-title-format '("Emacs - "
                              (:eval (if (buffer-file-name)
                                         (abbreviate-file-name
@@ -61,12 +61,9 @@
                          (if (member f (font-family-list))
                              (throw 'found f))))))
         (set-face-attribute 'default nil
-                            :family family :height 120)
+                            :family family :height 102)
         (if family
             (message (concat "Font loaded: " family))
           (message (concat "No Font loaded, Could not find a font"))))))
 
 ;;; c-code.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
