@@ -25,9 +25,12 @@
   :config
   ;; Eat settings
   (setopt eat-kill-buffer-on-exit t
-          eat-term-name "xterm"
-          eat-tramp-shells '(("docker" . "/bin/sh")
-                             ("ssh" . "/bin/bash")))  ; this is a temporary fix
+          eat-enable-directory-tracking t
+          eat-enable-shell-command-history t
+          eat-term-name 'eat-term-get-suitable-term-name  ; was "xterm"
+          eat-tramp-shells '(("docker" . "/bin/sh"))
+          ;;                   ("ssh" . "/bin/bash"))  ; this is a temporary fix
+          )
 
   ;; One of the following;
   ;; For `eat-eshell-mode'.
