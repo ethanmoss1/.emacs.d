@@ -61,6 +61,3 @@
       (vc-dir (project-root (project-current t))))))
 
 ;;; magit.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

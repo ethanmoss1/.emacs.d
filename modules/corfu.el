@@ -105,7 +105,4 @@
 
   (advice-add 'corfu--make-frame :around #'advise-corfu-make-frame-with-monitor-awareness))
 
-;;; corfu.el ends here ----------------------------------------------------
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+;;; corfu.el ends here
