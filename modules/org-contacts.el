@@ -1,4 +1,3 @@
-
 ;;; org-contacts.el --- Manage contacts in Org-mode  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025  Ethan Moss
@@ -42,6 +41,7 @@
   ;; (setopt org-contacts-files (directory-files org-contacts-directory t "\\.org$")))
   (setopt org-contacts-files (list (concat org-roam-directory
                                            "20250903120720-contacts.org")))
+
   (add-to-list 'org-capture-templates `("c"
                                         "Contacts"
                                         entry
