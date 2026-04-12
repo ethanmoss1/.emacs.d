@@ -20,6 +20,24 @@
 
 ;;; Code :
 
+(use-package notmuch
+  :config
+  (setopt notmuch-command "~/.config/notmuch/remote-notmuch"
+          notmuch-show-logo 'nil
+		  notmuch-hello-sections '(notmuch-hello-insert-header
+                                   notmuch-hello-insert-search
+                                   notmuch-hello-insert-saved-searches
+                                   ;; notmuch-hello-insert-recent-searches
+                                   notmuch-hello-insert-alltags)
+
+		  notmuch-saved-searches '((:name "inbox" :query "tag:inbox" :key "i")
+                                   (:name "unread" :query "tag:unread AND NOT tag:mailinglist" :key "u")
+                                   (:name "mailing lists" :query "tag:mailinglist AND tag:unread" :key "l" :search-type tree)
+                                   (:name "flagged" :query "tag:flagged" :key "f")
+                                   (:name "sent" :query "tag:sent" :key "t")
+                                   (:name "important" :query "tag:important" :key "p")
+                                   (:name "all mail" :query "*" :key "a"))))
+
 ;; This adds the store link functionality to notmuch allowing me to use
 ;; `org-link-store’ to store a link to the message that works in the search mode
 ;; as well as the show mode. With this, i can use `org-capture’ and i am able to
@@ -58,38 +76,6 @@
 	      :type "notmuch"
 	      :link link
 	      :description description))))))
-
-;; (defun my/notmuch-edit-config ()
-;;   "Edit the taggin config for notmuch"
-;;   (interactive)
-;;   (find-file "/ssh:syncthing:~/mail/.notmuch/tagmail"))
-
-(use-package notmuch
-  :config
-  ;; Notmuch on remote server, ssh config and custom bash file needed
-  (if (string-equal my-hostname "tablet")
-	  (setq notmuch-command "/data/data/com.termux/files/home/mail/.notmuch/remote-notmuch")
-	(setq notmuch-command "~/mail/.notmuch/remote-notmuch"))
-
-  ;;;; Notmuch - Welcome screen
-  (setopt notmuch-show-logo nil
-		  notmuch-hello-sections '(notmuch-hello-insert-header
-                                   notmuch-hello-insert-search
-                                   notmuch-hello-insert-saved-searches
-                                   ;; notmuch-hello-insert-recent-searches
-                                   notmuch-hello-insert-alltags)
-
-		  notmuch-saved-searches '((:name "inbox" :query "tag:inbox" :key "i")
-                                   (:name "unread" :query "tag:unread AND NOT tag:mailinglist" :key "u")
-                                   (:name "mailing lists" :query "tag:mailinglist AND tag:unread" :key "l" :search-type tree)
-                                   (:name "flagged" :query "tag:flagged" :key "f")
-                                   (:name "sent" :query "tag:sent" :key "t")
-                                   (:name "important" :query "tag:important" :key "p")
-                                   (:name "all mail" :query "*" :key "a"))
-
-  ;;;; Notmuch - Mail view
-		  ;; mm-text-html-renderer 'shr
-          ))
 
 ;;; This is a test function to add to the notmuch wash (makes things when )
 ;; (defun notmuch-wash-convert-inline-github-patch-to-part (msg depth)
