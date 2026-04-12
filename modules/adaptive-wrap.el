@@ -19,12 +19,10 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-
-;;
+;; Adaptive wrap is used to better wrap long lines based on the original lines
+;; indent level
 
 ;;; Code:
-
-(use-package adaptive-wrap
-  :hook (prog-mode . adaptive-wrap-prefix-mode))
+(use-package adaptive-wrap)
 
 ;;; adaptive-wrap.el ends here
