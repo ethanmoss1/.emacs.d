@@ -19,3 +19,5 @@ projects
 custom-file.el
 /recentf
 /transient/
+/org-roam.db
+/.org-id-locations
