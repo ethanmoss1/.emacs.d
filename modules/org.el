@@ -34,7 +34,8 @@
   (setopt org-agenda-files-and-study
           (append (directory-files org-directory t "\\.org$")
                   (directory-files-recursively "~/Documents/study" "\\.org$")
-                  (directory-files (concat org-directory "google/tasks") t "\\.org$")))
+                  ;; (directory-files (concat org-directory "google/tasks") t "\\.org$")
+                  ))
   (setopt org-agenda-files-all (directory-files-recursively "~/Documents" "\\.org$")))
 
 (defun my/load-minor-modes-for-org ()
@@ -43,9 +44,13 @@
   ;;   (flyspell-mode 1))
   (toggle-truncate-lines 0)
   (toggle-word-wrap 1)
-  (adaptive-wrap-prefix-mode)
+  ;; Make word wrapping indent sensitive
+  (if (fboundp 'adaptive-wrap-prefix-mode)
+      (adaptive-wrap-prefix-mode))
+  ;; Maximium visual width
   (if (fboundp 'olivetti-mode)
       (olivetti-mode t))
+  ;; Visability of emphasis and other markers. eg *bold* or /italics/.
   (if (fboundp 'org-appear-mode)
       (org-appear-mode t)))
 
@@ -75,15 +80,6 @@
   (interactive)
   (org-agenda nil "n"))
 
-;; (defun my/org-remove-inherited-tag-strings ()
-;;   "Removes inherited tags from the headline-at-point's tag string.
-;; Note this does not change the inherited tags for a headline,
-;; just the tag string."
-;;   (interactive)
-;;   (org-set-tags (seq-remove (lambda (tag)
-;;                               (get-text-property 0 'inherited tag))
-;;                             (org-get-tags))))
-
 (defun my/org-clean-tags ()
   "Visit last refiled headline and remove inherited tags from tag string.
 Inspiration from:
@@ -103,29 +99,6 @@ Otherwise will return NIL"
   "Search the files in the Org directory to find what you need!"
   (interactive)
   (consult-grep org-directory))
-
-;; Emphasis words easily. pilfered from;
-;; https://christiantietze.de/posts/2024/12/org-mode-emphasis-keymap-mnemonics/
-(defun my/org-emphasize-below-point (&optional char)
-  "Emphasise region with CHAR.
-
-If there's no region, marks the closest s-expression, first.
-Opposed to word boundaries, sexp's work with `subword-mode' enabled."
-  (interactive)
-  (unless (region-active-p)
-    (backward-sexp)
-    (mark-sexp))
-  (org-emphasize char))
-
-;; (defvar-keymap my/org-emphasis-map
-;;   :doc "Keymap for quickly applying Org emphasis rules."
-;;   :name "[b]old [i]talic [u]nderscore [v]erbatim [c]ode [s]trike-though"
-;;   "b" (lambda () (interactive) (my/org-emphasize-below-point ?*))
-;;   "i" (lambda () (interactive) (my/org-emphasize-below-point ?/))
-;;   "u" (lambda () (interactive) (my/org-emphasize-below-point ?_))
-;;   "v" (lambda () (interactive) (my/org-emphasize-below-point ?=))
-;;   "c" (lambda () (interactive) (my/org-emphasize-below-point ?~))
-;;   "s" (lambda () (interactive) (my/org-emphasize-below-point ?+)))
 
 ;;;; Use-package ---------------------------------------------------------------
 
@@ -160,6 +133,16 @@ Opposed to word boundaries, sexp's work with `subword-mode' enabled."
 								 ;; (maxima . t)
 								 (shell . t)
 								 (C . t)))
+
+  ;; Colour the output of org babel bash results using the escape codes.
+  (defun my/org-babel-ansi-color-filter ()
+  "Apply ANSI colour codes to Org Babel output."
+  (when (string-match-p "bash" (car (org-babel-get-src-block-info)))
+    (ansi-color-apply-on-region (point-min) (point-max))))
+
+  (add-hook 'org-babel-after-execute-hook 'my/org-babel-ansi-color-filter)
+
+
   ;; Org Visuals
   (setopt org-hide-emphasis-markers nil
           org-pretty-entities nil
@@ -217,7 +200,8 @@ Opposed to word boundaries, sexp's work with `subword-mode' enabled."
           org-agenda-files (directory-files org-directory t "\\.org$")
           org-agenda-files-and-study (append (directory-files org-directory t "\\.org$")
                                              (directory-files-recursively "~/Documents/study" "\\.org$")
-                                             (directory-files (concat org-directory "google/tasks") t "\\.org$"))
+                                             ;; (directory-files (concat org-directory "google/tasks") t "\\.org$")
+                                             )
           org-agenda-files-all (directory-files-recursively "~/Documents" "\\.org$"))
 
   ;; Org-agenda settings
