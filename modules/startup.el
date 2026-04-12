@@ -36,7 +36,7 @@
   :config
   (setopt inhibit-startup-screen t
           inhibit-startup-message t
-          inhibit-startup-echo-area-message t
+          inhibit-startup-echo-area-message (user-login-name)
 
           ;; Scratch buffer settings
           initial-scratch-message nil

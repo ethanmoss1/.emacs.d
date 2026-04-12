@@ -80,9 +80,6 @@
   (setq-default indent-tabs-mode nil
 				tab-width 4)
 
-  ;; Enable indentation and completion using the TAB key
-  (setq-default tab-always-indent nil)
-
   ;; Enable multi-line commenting which ensures that `comment-indent-new-line'
   ;; properly continues comments onto new lines, which is useful for writing
   ;; longer comments or docstrings that span multiple lines.

@@ -29,6 +29,6 @@
   :config
   (setopt window-divider-default-places t
 	      window-divider-default-right-width 2
-	      window-divider-default-bottom-width 2)
+	      window-divider-default-bottom-width 2))
 
 ;;; window.el ends here
