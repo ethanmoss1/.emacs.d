@@ -18,17 +18,8 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary :
-
 ;;; Code :
 (use-package corfu
-  ;; Enable Corfu only for certain modes.
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
-
-  ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
-  ;; be used globally (M-/).  See also the customization variable
   ;; `global-corfu-modes' to exclude certain modes.
   :hook (elpaca-after-init . global-corfu-mode)
   :config
@@ -38,7 +29,6 @@
           corfu-min-width 20)
   (corfu-popupinfo-mode t)
 
-  ;; (require 'org-TBLFM-regexp)
   (setopt corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
           corfu-auto t                 ;; Enable auto completion
           corfu-separator ?\s          ;; Orderless field separator
@@ -50,10 +40,10 @@
           corfu-scroll-margin 2))      ;; Use scroll margin
 
 ;; Additional package to make it work on terminal.
-(use-package corfu-terminal
-  :if (not (display-graphic-p))
-  :after (corfu)
-  :init (corfu-terminal-mode))
+;; (use-package corfu-terminal
+;;   :if (not (display-graphic-p))
+;;   :after (corfu)
+;;   :init (corfu-terminal-mode))
 
 ;; A few more useful configurations...
 (use-package emacs
