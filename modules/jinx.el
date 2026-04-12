@@ -22,7 +22,7 @@
 
 (defun my/jinx-vertico-multiform ()
   "If vertico is enabled, setup multiform"
-  (if (not vertico-mode)
+  (if (and (fboundp 'vertico-mode) (not vertico-mode))
       (message "Jinx: Vertico-mode is not enabled")
     (vertico-multiform-mode)
     (add-to-list 'vertico-multiform-categories
@@ -34,6 +34,7 @@
   (if (and enchant pkg-conf)
       ;; We have the executable
       (use-package jinx
+        :after (vertico)
         :hook ((elpaca-after-init . global-jinx-mode)
                (elpaca-after-init . my/jinx-vertico-multiform))
         :bind (("C-." . jinx-correct)
@@ -42,8 +43,8 @@
         (setopt jinx-languages "en_GB en_GB-ise en_US"))
 
     ;; one of the executable not found
-    (message "Jinx Not Loaded: Cannot find executable(s): %s"
-             (concat (if (not enchant) "enchant-2 ")
-                     (if (not pkg-conf) "pkgconf ")))))
+    (message "Jinx Not Loaded: Cannot find executable(s):%s%s"
+             (if (not enchant) " enchant-2" "")
+             (if (not pkg-conf) " pkgconf" ""))))
 
 ;;; jinx.el ends here
