@@ -24,7 +24,7 @@
   :defer t
   :hook (prog-mode . show-paren-mode)
   :config
-  (setq show-paren-style 'parenthesis
+  (setopt show-paren-style 'parenthesis
 		show-paren-delay 0.1
 		show-paren-highlight-openparen t
         show-paren-when-point-inside-paren t
@@ -32,6 +32,7 @@
         show-paren-context-when-offscreen 'overlay)
 
   ;; Don't blink the paren matching the one at point, it's too distracting.
-  (setq blink-matching-paren nil))
+  (setopt blink-matching-paren nil
+          blink-matching-paren-distance nil))
 
 ;;; paren.el ends here
