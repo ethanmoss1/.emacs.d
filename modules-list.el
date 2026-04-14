@@ -25,7 +25,7 @@
    ;; -- Org Modules --
    "org"
 
-   ; Agenda relatec
+   ; Agenda related
    "org-contrib"
    "org-protocol"
    "org-export-icalendar"
@@ -48,6 +48,7 @@
 
    ; org tools
    "el-easydraw"
+   "jinx" ; Spell checking
 
    ;; -- Bibliography related packages --
    ;; "citar"
@@ -68,6 +69,7 @@
    "c"
 
    "dockerfile" ; syntax for dockerfiles
+   "yang"
 
    "rainbow"
 
@@ -80,8 +82,6 @@
    "programming"
    "vundo"         ;; Visual undo history
    "hl-todo"
-   ;; "adaptive-wrap" ;; Emacs lisp
-   ;; "jinx"
    ;; "aggressive-indent"
    ;; "markdown"
 
