@@ -69,6 +69,7 @@
    "c"
 
    "dockerfile" ; syntax for dockerfiles
+   "cisco-ios"
    "yang"
 
    "rainbow"
