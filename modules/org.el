@@ -40,8 +40,6 @@
 
 (defun my/load-minor-modes-for-org ()
   "Loads all the minor modes for use with Org mode"
-  ;; (unless (fboundp 'jinx-mode)
-  ;;   (flyspell-mode 1))
   (toggle-truncate-lines 0)
   (toggle-word-wrap 1)
   ;; Make word wrapping indent sensitive
@@ -170,7 +168,7 @@ Otherwise will return NIL"
                              "latexmlmath %i --presentationmathml=%o")))
 
     ;; Thinkpad Latex Setup
-    ("thinkpad" (setopt org-format-latex-options '( :scale 1.5 )
+    ("thinkpad" (setopt org-format-latex-options '( :scale 1.2 )
                         org-preview-latex-default-process 'dvisvgm
                         org-latex-to-mathml-convert-command "latexmlmath %i --presentationmathml=%o"))
 
