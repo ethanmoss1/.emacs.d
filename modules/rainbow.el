@@ -23,7 +23,9 @@
 ;;; Code :
 (use-package rainbow-mode
   :defer t
-  :diminish rainbow-mode)
+  :diminish rainbow-mode
+  :hook (prog-mode)
+  )
 
 ;;; rainbow.el ends here
 ;; Local Variables:

@@ -168,6 +168,12 @@ Otherwise will return NIL"
                      (setopt org-preview-latex-default-process 'dvisvgm
                              org-latex-to-mathml-convert-command
                              "latexmlmath %i --presentationmathml=%o")))
+
+    ;; Thinkpad Latex Setup
+    ("thinkpad" (setopt org-format-latex-options '( :scale 1.5 )
+                        org-preview-latex-default-process 'dvisvgm
+                        org-latex-to-mathml-convert-command "latexmlmath %i --presentationmathml=%o"))
+
     ("mac" (progn (setopt org-format-latex-options
                           '( :foreground default
                              :background "Transparent"
@@ -179,6 +185,7 @@ Otherwise will return NIL"
                   (setopt org-preview-latex-default-process 'dvisvgm)
                   (setopt org-latex-to-mathml-convert-command
                           "latexmlmath %i --presentationmathml=%o")))
+
     ("linux" (setopt org-format-latex-options '( :scale 0.5 )
                      org-preview-latex-default-process 'dvisvgm
                      org-latex-to-mathml-convert-command
