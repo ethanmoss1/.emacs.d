@@ -21,3 +21,4 @@ custom-file.el
 /transient/
 /org-roam.db
 /.org-id-locations
+/multisession/
