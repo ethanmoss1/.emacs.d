@@ -6,6 +6,7 @@
    "elpaca"
 
    ;; -- Compulsory Modules --
+   "compat"
    "vertico"
    "orderless"
    "marginalia"

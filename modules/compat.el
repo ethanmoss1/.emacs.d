@@ -1,8 +1,8 @@
-;;; vertico.el ---   -*- lexical-binding: t; -*-
+;;; compat.el --- compat                             -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023  Ethan Moss
+;; Copyright (C) 2026  ethan
 
-;; Author: Ethan Moss <cywinskimoss@gmail.com>
+;; Author: ethan <ethan@thinkpad>
 ;; Keywords: lisp
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -18,12 +18,15 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary :
+;; Commentary:
+;; Compat is a built in library by Minad;
+;; https://github.com/emacs-compat/compat
+;;
+;; Solves the following issues.
+;; https://github.com/progfolio/elpaca/issues/538
 
-;;; Code :
-(use-package vertico
-  :config
-  (setq vertico-count 7)
-  (vertico-mode t))
+;;; Code:
 
-;; vertico.el ends here
+(use-package compat :ensure (:wait t))
+
+;;; compat.el ends here
