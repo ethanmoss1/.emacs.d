@@ -22,6 +22,7 @@
    "modus-themes"
    "nerd-icons"
    "modeline"
+   "minions"
 
    ;; -- Org Modules --
    "org"

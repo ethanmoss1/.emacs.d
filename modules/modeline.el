@@ -27,15 +27,18 @@
     ;; see `mode-line-collapse-minor-modes’ for more information
     ;; Hide some modes
     (setopt mode-line-collapse-minor-modes '(abbrev-mode
-					     flyspell-mode
-					     flyspell-prog-mode
-					     eldoc-mode
-					     auto-revert-mode))
+					                         flyspell-mode
+					                         flyspell-prog-mode
+					                         eldoc-mode
+					                         auto-revert-mode))
     ;; Hide all modes
     ;; (setopt mode-line-collapse-minor-modes '(not))
-    ))
+    )
+  (defun mode-line-swap-element (elt)
+    ;; If ELT is in mode-line, swap it with a auto-hiding version of itself.
+    (cl-nsubstitute `(:eval (when (mode-line-window-selected-p) ,elt))
+                    elt
+                    mode-line-format
+                    :test #'equal)))
 
 ;;; modeline.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

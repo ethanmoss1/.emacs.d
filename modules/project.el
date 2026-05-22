@@ -29,7 +29,10 @@
 (use-package project
   :ensure nil
   :config
+  (setopt project-compilation-buffer-name-function 'project-prefixed-buffer-name)
 
+
+  ;; Allow non-vc projects
   (defgroup project-local nil
     "Local, non-VC-backed project.el root directories."
     :group 'project)

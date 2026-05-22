@@ -1,16 +1,28 @@
-;; Minions - hide minor modes
+;;; minions.el --- Hide minor modes                  -*- lexical-binding: t; -*-
+;; Copyright (C) 2026  Ethan Moss
 
-;; [[file:../emacsconfig.org::*Minions - hide minor modes][Minions - hide minor modes:1]]
-(message "[ Moss ] Loading module, Minions  ... ")
+;; Author: Ethan Moss <cywinskimoss@gmail.com>
+;; Keywords: lisp
 
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Code :
 (use-package minions
-  :init
-  (setq minions-mode-line-lighter "≡ ")
+  :hook ((elpaca-after-init . minions-mode)
+         (minions-mode . (lambda () (mode-line-swap-element 'minions-mode-line-modes))))
   :config
-  (minions-mode 1))
+  (setopt minions-mode-line-lighter " ∷"))
 
-(provide 'moss-minions)
-;; Minions - hide minor modes:1 ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+;;; minions.el ends here
