@@ -28,10 +28,14 @@
 ;; Allow nested minibuffers
 (setq enable-recursive-minibuffers t)
 
+;; Show the depth of the minibuffer
+(minibuffer-depth-indicate-mode)
+
 ;; Keep the cursor out of the read-only portions of the.minibuffer
 (setq minibuffer-prompt-properties
       '(read-only t intangible t cursor-intangible t face
                   minibuffer-prompt))
+
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;;; minibuffer.el ends here
