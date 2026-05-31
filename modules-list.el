@@ -69,13 +69,18 @@
    ;; -- Programming Modules --
    "eglot"
 
+   ;; Full Languages
    "nix"
    "python"
    "c"
 
-   "dockerfile" ; syntax for dockerfiles
+   ;; Syntax ++
+   "dockerfile"
    "cisco-ios"
    "yang"
+   "systemd"
+   "yaml"
+   "markdown"
 
    "rainbow"
 
@@ -89,8 +94,6 @@
    "vundo"         ;; Visual undo history
    "hl-todo"
    ;; "aggressive-indent"
-   ;; "markdown"
-
 
    ;; -- Builtin modules --
    "dired"
