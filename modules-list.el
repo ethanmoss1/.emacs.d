@@ -2,6 +2,9 @@
 (mapcar
  'config-module-load
  '(;;;;;; ---- List of modules to load ----
+   ;; -- Pre-setup
+   "host-configuration"
+
    ;; -- Package manager --
    "elpaca"
 
