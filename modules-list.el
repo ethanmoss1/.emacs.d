@@ -93,7 +93,7 @@
    "programming"
    "vundo"         ;; Visual undo history
    "hl-todo"
-   ;; "aggressive-indent"
+   "aggressive-indent"
 
    ;; -- Builtin modules --
    "dired"
