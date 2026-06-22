@@ -26,8 +26,8 @@
   :ensure nil
   :config
   ;; Change to euro style
-  (setq calendar-week-start-day 1  ;; monday week start
-        calendar-date-style 'European)
+  (setopt calendar-week-start-day 1  ;; monday week start
+          calendar-date-style 'european
 
   ;; display buffer position
   (add-to-list 'display-buffer-alist
@@ -40,6 +40,3 @@
                   (no-delete-other-windows . nil)))))
 
 ;;; calendar.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
