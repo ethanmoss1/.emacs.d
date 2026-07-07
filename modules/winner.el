@@ -22,7 +22,20 @@
 
 (use-package winner
   :ensure nil
+  :bind (("C-x w n" . 'winner-redo)
+         ("C-x w p" . 'winner-undo))
   :config
+
+  ;; (defvar winner-repeat-map
+  ;;   (let ((map (make-sparse-keymap)))
+  ;;     (define-key map "p" #'winner-undo)
+  ;;     (define-key map "n" #'winner-redo)
+  ;;     map)
+  ;;   "Keymap for repeating winner-mode commands.")
+  ;;
+  ;; (put #'winner-undo 'repeat-map 'winner-repeat-map)
+  ;; (put #'winner-redo 'repeat-map 'winner-repeat-map)
+
   (winner-mode))
 
 ;;; winner.el ends here

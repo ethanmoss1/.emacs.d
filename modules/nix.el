@@ -55,7 +55,6 @@
         lsp-nix-nixd-formatting-command [ "nixfmt" ]
         lsp-nix-nixd-nixpkgs-expr "import <nixpkgs> { }"
         lsp-nix-nixd-nixos-options-expr "(builtins.getFlake \"/home/ethan/.config/nixos\").nixosConfigurations.macbook-pro.options"
-        lsp-nix-nixd-home-manager-options-expr "(builtins.getFlake \"home/ethan/.config/nixos\").nixosConfigurations.macbook-pro.options.home-manager.users.type.getSubOptions []")
-  )
+        lsp-nix-nixd-home-manager-options-expr "(builtins.getFlake \"home/ethan/.config/nixos\").nixosConfigurations.macbook-pro.options.home-manager.users.type.getSubOptions []"))
 
 ;;; nix.el ends here

@@ -1,4 +1,4 @@
-;;; eat.el --- Better shell in emacs                -*- lexical-binding: t; -*-
+;;; eat.el --- Better shell in Emacs                -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024
 
@@ -21,14 +21,16 @@
 ;;; Code:
 
 (use-package eat
-  :bind ("C-c t" . eat)
+  :bind (("C-c t" . eat)
+         :map project-prefix-map
+         ("s" . eat-project))
   :config
   ;; Eat settings
   (setopt eat-kill-buffer-on-exit t
           eat-enable-directory-tracking t
           eat-enable-shell-command-history t
           eat-term-name 'eat-term-get-suitable-term-name  ; was "xterm"
-          eat-tramp-shells '(("docker" . "/bin/sh"))
+          ;; eat-tramp-shells '(("docker" . "/bin/sh"))
           ;;                   ("ssh" . "/bin/bash"))  ; this is a temporary fix
           )
 
@@ -40,7 +42,7 @@
 ;; Set up the popup shell
 (add-to-list 'display-buffer-alist
              ;; *shell*  *eshell*  *eat*
-             '("\\*\\(e?shell\\|eat\\)\\*"
+             '("\\(e?shell\\|eat\\)\\*"
                (display-buffer-in-side-window)
                (side . bottom)
                (slot . -1) ;; -1 == L  0 == Mid 1 == R

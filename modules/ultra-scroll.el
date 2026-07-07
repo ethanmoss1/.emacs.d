@@ -24,10 +24,10 @@
 ;;; Code:
 
 (use-package ultra-scroll
-  :if (string-equal my-hostname "laptop")
   :ensure ( :host github
             :repo "jdtsmith/ultra-scroll"
             :files (:defaults "*.el"))
-  :config (ultra-scroll-mode))
+  :config
+  (ultra-scroll-mode))
 
 ;;; ultra-scroll.el ends here

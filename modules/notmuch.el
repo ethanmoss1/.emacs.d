@@ -33,6 +33,7 @@
 		  notmuch-saved-searches '((:name "inbox" :query "tag:inbox" :key "i")
                                    (:name "unread" :query "tag:unread AND NOT tag:mailinglist" :key "u")
                                    (:name "mailing lists" :query "tag:mailinglist AND tag:unread" :key "l" :search-type tree)
+                                   (:name "recent" :query "tag:inbox AND date:30d..today" :key "r")
                                    (:name "flagged" :query "tag:flagged" :key "f")
                                    (:name "sent" :query "tag:sent" :key "t")
                                    (:name "important" :query "tag:important" :key "p")
