@@ -30,28 +30,28 @@
    ;; -- Org Modules --
    "org"
 
-   ; Agenda related
+   ;; Agenda related
    "org-contrib"
    "org-protocol"
    "org-export-icalendar"
    "org-gtasks"
 
-   ; Links
+   ;; Links
    "org-link-man"
    "org-link-rfc"
 
-   ; Personal Knowledge Management
+   ;; Personal Knowledge Management
    "org-roam"
    "org-roam-timestamps"
    "org-contacts"
 
-   ; Prettifying
+   ;; Prettifying
    "org-fragtog"
    "org-appear"
    "adaptive-wrap"
    "olivetti"
 
-   ; org tools
+   ;; org tools
    "el-easydraw"
    "jinx" ; Spell checking
 
@@ -63,7 +63,7 @@
 
    ;; -- News and Email --
    ;; "elfeed"
-   ;; "notmuch"
+   "notmuch"
    ;; "ntfy"
 
    ;; -- Programming Modules --
@@ -94,6 +94,7 @@
    "vundo"         ;; Visual undo history
    "hl-todo"
    "aggressive-indent"
+   "ultra-scroll"
 
    ;; -- Builtin modules --
    "dired"
@@ -125,4 +126,5 @@
    "ediff"
    "dictionary"
    "project"
-   )) ;; -- End of Modules --
+   ))
+;; -- End of Modules --
