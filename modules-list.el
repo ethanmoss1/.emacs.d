@@ -8,6 +8,37 @@
    ;; -- Package manager --
    "elpaca"
 
+   ;; -- Builtin modules --
+   "dired"
+   "keybindings"
+   "repeat"
+   "c-code"
+   "startup"
+   "frame"
+   "mouse"
+   "widget"
+   "simple"
+   "electric"
+   "font-core"
+   "saveplace"
+   "subr"
+   "files"
+   "delsel"
+   "paren"
+   "uniquify"
+   "recentf"
+   "savehist"
+   "auto-insert"
+   "ibuffer"
+   "window"
+   "tramp"
+   "minibuffer"
+   "calendar"
+   "winner"
+   "ediff"
+   "dictionary"
+   "project"
+
    ;; -- Compulsory Modules --
    "compat"
    "vertico"
@@ -39,6 +70,7 @@
    ;; Links
    "org-link-man"
    "org-link-rfc"
+   "org-link-pdf"
 
    ;; Personal Knowledge Management
    "org-roam"
@@ -68,6 +100,8 @@
 
    ;; -- Programming Modules --
    "eglot"
+   "yasnippet"
+   "gptel"
 
    ;; Full Languages
    "nix"
@@ -88,6 +122,7 @@
    "magit"
    "envrc"
    "eat"
+   "nix-host"
 
    ;; -- Editing modules --
    "programming"
@@ -95,36 +130,5 @@
    "hl-todo"
    "aggressive-indent"
    "ultra-scroll"
-
-   ;; -- Builtin modules --
-   "dired"
-   "keybindings"
-   "repeat"
-   "c-code"
-   "startup"
-   "frame"
-   "mouse"
-   "widget"
-   "simple"
-   "electric"
-   "font-core"
-   "saveplace"
-   "subr"
-   "files"
-   "delsel"
-   "paren"
-   "uniquify"
-   "recentf"
-   "savehist"
-   "auto-insert"
-   "ibuffer"
-   "window"
-   "tramp"
-   "minibuffer"
-   "calendar"
-   "winner"
-   "ediff"
-   "dictionary"
-   "project"
    ))
 ;; -- End of Modules --
