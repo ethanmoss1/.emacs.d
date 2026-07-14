@@ -24,6 +24,21 @@
   (interactive)
   (consult-grep org-roam-directory))
 
+(defun my/org-replace-ids (id1 id2 &optional dir)
+  "Search DIRECTORY for files and replace occurrences of ID1 with ID2.
+Executes an asynchronous find and sed command, redirecting output
+to the '* ID replacement*' buffer."
+  (interactive "sTarget ID (old): \nsReplacement ID (new): ")
+  (let* ((expanded-dir (or dir (expand-file-name org-directory)))
+         (shell-dir (shell-quote-argument expanded-dir))
+         (shell-id1 (shell-quote-argument id1))
+         (shell-id2 (shell-quote-argument id2))
+         ;; Construct the command string
+         (cmd (format "find %s -type f -exec sed -i 's/%s/%s/g' {} +"
+                      shell-dir shell-id1 shell-id2)))
+    ;; Execute asynchronously
+    (async-shell-command cmd)))
+
 (use-package org-roam
   :after (org)
   :defer t

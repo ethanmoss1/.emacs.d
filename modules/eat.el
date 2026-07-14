@@ -21,6 +21,12 @@
 ;;; Code:
 
 (use-package eat
+  ;; Using a fork as it implements a patch to copy over term type for eat.
+  ;; https://codeberg.org/CeleritasCelery/emacs-eat  # Fork Repo
+  ;; https://codeberg.org/akib/emacs-eat/pulls/229   # Pull Request on master
+  :ensure ( :type git
+            :host "codeberg.org"
+            :repo "CeleritasCelery/emacs-eat")
   :bind (("C-c t" . eat)
          :map project-prefix-map
          ("s" . eat-project))

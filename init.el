@@ -38,6 +38,10 @@
 ;; Jerrypnz hydra ........................ https://github.com/jerrypnz/.emacs.d
 
 ;;;; Code:
+
+;; TODO Remove this later
+(setq config-module-managed-dotfiles nil)
+
 (defgroup config nil
   "test group"
   :group 'emacs)

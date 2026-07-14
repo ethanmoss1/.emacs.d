@@ -22,49 +22,46 @@
 ;; For more info visit the github page.
 ;; https://github.com/karthink/gptel
 
+;;; Commentary:
+
+;; Usage Available at;
+;; https://aistudio.google.com/rate-limit
+
 ;;; Code:
 
-;; Optional package
-;; (use-package markdown-mode)
-
 (defun get-gemini-key ()
-  "Gets the gemini key if it is available."
-  (let ((key   (plist-get (car (auth-source-search
-                                :max 1
-                                :host "ai.gemini"
-                                :user "google"))
-                          :secret)))
-    (unless key
-      (message "Failed getting key for GPTel: Setup API key in Authinfo"))))
+  "Retrieve the Gemini API key from auth-source.
+Returns the secret string if found, otherwise returns nil and displays an error message."
+  (let* ((results (auth-source-search :host "api.google.com"
+                                      :user "gemini"
+                                      :require '(:secret)))
+         (entry (car results))
+         (secret-data (and entry (plist-get entry :secret))))
+    (cond
+     ((functionp secret-data) (funcall secret-data))
+     (secret-data secret-data)
+     (t (message "Failed getting key for Gemini: Setup API key in Authinfo")
+        nil))))
 
 (use-package gptel
+  :hook ((gptel-post-stream . gptel-auto-scroll)
+         (gptel-post-response-functions . gptel-end-of-response))
   :config
-  ;; gptel configurations
-  (setq gptel-default-mode 'org-mode)
-
-  ;; Hooks
-  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
-  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
-
-  ;; Change to Gemini
-  (setq gptel-model 'gemini-pro
-        gptel-backend (gptel-make-gemini "Gemini"
-                        :key (funcall 'get-gemini-key)
-                        :stream t))
-
-
+  (setopt gptel-default-mode 'markdown-mode
+          gptel-model 'gemini-flash-lite-latest
+          gptel-backend (gptel-make-gemini "Gemini"
+                          :key (funcall 'get-gemini-key)
+                          :stream t))
 
   ;; Display buffer alist
-  (add-to-list 'display-buffer-alist
-               '("\\*gemini\\*"
-                 (display-buffer-in-side-window)
-                 (side . bottom)
-                 (slot . -1) ;; -1 == L  0 == Mid 1 == R
-                 (window-height . 0.33) ;; take 2/3 on bottom left
-                 (window-parameters
-                  (no-delete-other-windows . nil)))))
+  ;; (add-to-list 'display-buffer-alist
+  ;;              '("\\*gemini\\*"
+  ;;                (display-buffer-in-side-window)
+  ;;                (side . bottom)
+  ;;                (slot . -1) ;; -1 == L  0 == Mid 1 == R
+  ;;                (window-height . 0.33) ;; take 2/3 on bottom left
+  ;;                (window-parameters
+  ;;                 (no-delete-other-windows . nil))))
+  )
 
 ;;; gptel.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

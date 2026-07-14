@@ -32,11 +32,9 @@
   :config
   (add-to-list 'display-buffer-alist
 			   '("^\\*helpful"
-                 (display-buffer-same-window)
-                 (window-parameters
-                  (no-delete-other-windows . t)))))
+                 (display-buffer-reuse-mode-window
+                  display-buffer-pop-up-window-below
+                  display-buffer-pop-up-window)
+                 (mode . helpful-mode))))
 
 ;; helpful.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:

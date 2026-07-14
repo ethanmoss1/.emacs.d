@@ -29,6 +29,23 @@
   :config
   (setopt window-divider-default-places t
 	      window-divider-default-right-width 2
-	      window-divider-default-bottom-width 2))
+	      window-divider-default-bottom-width 2)
+
+  ;; modified from pdf-tools/lisp/pdf-util.el
+  (defun display-buffer-pop-up-window-below (buffer alist)
+    "Display BUFFER by popping up a new window below current."
+    (let ((window (selected-window))
+          (height (cdr (assq 'window-height alist)))
+          newwin)
+
+      (when height
+        (when (floatp height)
+          (setq height (round (* height (frame-height)))))
+        (setq height (- (max height window-min-height))))
+      (setq newwin (window--display-buffer
+                    buf
+                    (split-window-below height)
+                    'window alist))
+      newwin)))
 
 ;;; window.el ends here
