@@ -64,6 +64,7 @@
           dired-kill-when-opening-new-dired-buffer nil
           dired-dwim-target t
           dired-vc-rename-file t
+          dired-clean-confirm-killing-deleted-buffers nil
 
           ;; hide .dot files when in dired-omit-mode
           dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
@@ -74,6 +75,7 @@
     (interactive "P")
     (let ((delete-by-moving-to-trash nil))
       (dired-do-delete arg))))
+
 
 ;; ;; TODO: this works but the problem is that the buffer doesnt exit on
 ;; ;; selecting a file, an the window doesnt replace the window that was last
