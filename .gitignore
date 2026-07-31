@@ -23,3 +23,6 @@ custom-file.el
 /.org-id-locations
 /multisession/
 /elfeed/
+/edraw-ui-state.config
+/url/
+/bookmarks
