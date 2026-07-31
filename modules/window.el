@@ -43,7 +43,7 @@
           (setq height (round (* height (frame-height)))))
         (setq height (- (max height window-min-height))))
       (setq newwin (window--display-buffer
-                    buf
+                    buffer
                     (split-window-below height)
                     'window alist))
       newwin)))
