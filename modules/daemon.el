@@ -25,6 +25,6 @@
   (setopt daemons-systemd-color t))
 
 ;;; daemon.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

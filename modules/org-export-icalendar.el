@@ -59,6 +59,6 @@
         (run-with-idle-timer (* 10 60) t #'my/generate-ics-daily))))
 
 ;;; org-export-icalendar.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

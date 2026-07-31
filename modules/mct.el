@@ -99,6 +99,6 @@
 ;; (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;;; mct.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

@@ -13,6 +13,6 @@
 
 (provide 'moss-vterm)
 ;;; moss-vterm.el ends here -----------------------------------------------------
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

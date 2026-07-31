@@ -32,6 +32,6 @@
   (gcmh-mode +1))
 
 (provide 'moss-performance)
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

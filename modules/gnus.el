@@ -64,6 +64,6 @@
 ;; the FAQ In case of problems or questions don't hesitate to conatct
 ;; support@eternal-september.org.
 
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

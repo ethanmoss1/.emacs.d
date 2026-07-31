@@ -41,6 +41,6 @@
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 ;;; lsp-mode.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

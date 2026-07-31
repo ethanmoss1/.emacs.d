@@ -106,6 +106,6 @@
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
 
 ;;; files.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

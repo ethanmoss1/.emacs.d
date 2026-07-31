@@ -50,6 +50,6 @@ The DWIM behaviour of this command is as follows:
 (global-set-key [remap keyboard-quit] #'prot/keyboard-quit-dwim)
 
 ;;; prot-better-c-g.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

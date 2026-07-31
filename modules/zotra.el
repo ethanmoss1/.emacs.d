@@ -82,6 +82,6 @@ attachment for it and adds the filename to a bibtex field named ’File'."
   (setopt zotra-use-curl 't))
 
 ;;; zotra.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

@@ -38,6 +38,6 @@
              ("C-c C-c" . notmuch-microdata-show-action-view)))
 
 ;;; microdata.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+

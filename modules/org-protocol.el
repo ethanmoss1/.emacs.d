@@ -29,6 +29,6 @@
   (setopt org-protocol-default-template-key "w"))
 
 ;;; org-protocol.el ends here
-;; Local Variables:
-;; eval: (if config-module-managed-dotfiles (add-hook 'after-save-hook 'chezmoi-write nil t))
-;; End:
+
+
+
