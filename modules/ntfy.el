@@ -18,44 +18,33 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;;; Commentary:
+
+;; Original ensure here;
+;; :ensure ( :host github
+;;           :repo "shombando/ntfy"
+;;           :files (:defaults "*.el"))
+;; This is from the original repo that I've pretty much completely rewrote;
+;; https://github.com/shombando/ntfy
+
+;; When developing use this;
+;; :ensure ( :repo "/home/ethan/Projects/ntfy/"
+;;           :files (defaults "*.el"))
+
 ;;; Code:
 
 (use-package ntfy
-  ;; :ensure ( :host github
-  ;;           :repo "shombando/ntfy"
-  ;;           :files (:defaults "*.el"))
-  :ensure ( :repo "/home/ethan/Documents/src/ntfy"
-            :files (defaults "*.el"))
+  :ensure ( :host github
+            :repo "ethanmoss1/ntfy"
+            :files (:defaults "*.el"))
   :config
+  (require 'ntfy-compilation)
   (setopt ntfy-server "https://ntfy.hmsrv.uk"
 		  ntfy-topic "macbook"
 		  ntfy-header "Notification from emacs"
           ntfy-priority 3
 		  ntfy-tags '("purple_circle" "loudspeaker"))
-
-  ;; For the compile function;
-  (defun point-beginning-of-last-line ()
-    "Get the position of the beginning of the last line"
-    (goto-char (point-max))
-    (if (bolp)
-        (backward-char 1))
-    (beginning-of-line)
-    (point))
-
-  (defun ntfy-compilation-finished (buf str)
-    ""
-    (with-current-buffer buf
-      (let ((first-line (buffer-substring (pos-bol 2)
-                                          (pos-eol 2)))
-            (last-line (buffer-substring (point-beginning-of-last-line)
-                                         (point-max))))
-
-        (ntfy--publish-message (format "%s\n%s" first-line last-line)
-                               (format "Compilation %s" (replace-regexp-in-string "\n" "" str))
-                               '("gear")))))
-
-  (setopt compilation-finish-functions '(ntfy-compilation-finished))
-  )
+  (ntfy-compilation t))
 
 ;; Test with: (ntfy-message "This is a test!")
 
