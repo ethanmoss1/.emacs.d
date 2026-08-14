@@ -27,7 +27,7 @@
   :config
   ;; Change to euro style
   (setopt calendar-week-start-day 1  ;; monday week start
-          calendar-date-style 'european
+          calendar-date-style 'european)
 
   ;; display buffer position
   (add-to-list 'display-buffer-alist
