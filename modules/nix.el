@@ -45,8 +45,10 @@
 ;;                (window-parameters
 ;;                 (no-delete-other-windows . t))))
 
+(use-package reformatter)
+
 (use-package nix-mode
-  ;; :hook (nix-mode . lsp-deferred) ;; So that envrc can load
+  :after (reformatter)
   :hook ((nix-mode . eglot-ensure))
   ;; :custom
   ;; (lsp-disabled-clients '((nix-mode . nix-nil))) ;; Disable nil so that nixd will be used as lsp-server
