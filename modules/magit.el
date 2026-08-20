@@ -21,36 +21,27 @@
 ;;; Code :
 
 ;; -- Configuration
+
 ;; Brand new package, requires its own recipe
 (use-package cond-let
   :ensure ( :host github :repo "tarsius/cond-let"
             :files (:defaults "cond-let.el")))
+
 (use-package transient)
+
 (use-package magit
   :after (transient cond-let)
   :bind (("C-c m m" . 'magit))
   :config
-  ;; VC Generic settings
-  (setq vc-make-backup-files nil
-        version-control t)
+  (setopt
+   ;; VC Generic settings
+   vc-make-backup-files nil
+   version-control t
 
-  ;; follow the default
-  (setq magit-delete-by-moving-to-trash delete-by-moving-to-trash)
-
-  ;; Magit Settings;
-  ;; Diff settings
-  (setq magit-diff-refine-hunk 'all)
-
-  ;; buffer alist
-  ;; (add-to-list 'display-buffer-alist
-  ;;              '("^COMMIT"
-  ;;                (display-buffer-in-side-window)
-  ;;                (side . bottom)
-  ;;                (slot . 0)
-  ;;                (window-height . 0.33)
-  ;;                (window-parameters
-  ;;                 (no-delete-other-windows . t))))
-  (setopt magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+   ;; Magit Settings
+   magit-delete-by-moving-to-trash delete-by-moving-to-trash
+   magit-diff-refine-hunk 'all
+   magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
 
   :init
   (defun project-vc-dir ()
