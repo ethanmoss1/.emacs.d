@@ -21,6 +21,7 @@
 ;;; Commentary :
 
 ;;; Code :
+
 (use-package modus-themes
   ;; :custom-face
   ;; (fringe ((t (:background "#000000"))))
@@ -44,7 +45,4 @@
 
   (load-theme 'modus-vivendi-tinted t))
 
-;;; modus-themes.el ends here -------------------------------------------------
-
-
-
+;;; modus-themes.el ends here
