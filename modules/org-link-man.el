@@ -73,15 +73,13 @@ PATH should be a topic that can be thrown at the man command."
 	    (`ascii (format "%s (%s)" desc path))
 	    (_ path))))
 
-  (add-to-list 'display-buffer-alist
-               ;; *Man test*
-               '("^\\*[Mm]an [a-z0-9]+\\*$"
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 (window-height . 0.70) ;; take 2/3 on bottom left
-                 (window-parameters
-                  (no-delete-other-windows . nil)))))
+  ;; (add-to-list 'display-buffer-alist
+  ;;              ;; *Man test*
+  ;;              '("^\\*[Mm]an [a-z0-9]+\\*$"
+  ;;                (display-buffer-reuse-window display-buffer-at-bottom)
+  ;;                (window-height . 0.70) ;; take 2/3 on bottom left
+  ;;                (window-parameters
+  ;;                 (no-delete-other-windows . nil))))
+  )
 
 ;;; org-man.el ends here
-
-
-
