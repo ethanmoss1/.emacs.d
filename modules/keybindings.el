@@ -45,25 +45,28 @@
 
 (when (or (string-equal my-hostname "macbook")
           (string-equal my-hostname "thinkpad"))
+
   ;; Set the default keyboard state
   (setq my/laptop-keyboard-enabled t)
-  ;; The name of the internal keyboard;
-  (setq my/laptop-keyboard-name (pcase my-hostname
-                                  ("macbook" "Apple Inc. Apple Internal Keyboard / Trackpad")
-                                  ("thinkpad" "AT Translated Set 2 Keyboard")))
-
-  ;; Get the ID of the internal keyboard
-  (setq my/laptop-keyboard-id (string-to-number (shell-command-to-string (format "xinput list --id-only 'keyboard:%s'" my/laptop-keyboard-name))))
 
   ;; Toggle keyboard function
   (defun my/toggle-laptop-keyboard ()
     "Toggles the intergrated keyboard on my Macbook Pro"
     (interactive)
     (let ((kb-enable (if my/laptop-keyboard-enabled "disable" "enable")))
-      (shell-command (format "xinput %s %s"
-                             kb-enable
-                             my/laptop-keyboard-id
-                             ))
+      (shell-command
+       (format "xinput %s %s"
+               kb-enable
+               ;; Get the ID of the keyboard
+               (with-temp-buffer
+                 (shell-command "xinput list" (current-buffer))
+                 (goto-char (point-min))
+                 (search-forward my/laptop-keyboard-name)
+                 (search-forward "id=")
+                 (string-to-number (buffer-substring-no-properties
+                                    (point)
+                                    (progn (skip-chars-forward "0-9")
+                                           (point)))))))
       (setq my/laptop-keyboard-enabled (not my/laptop-keyboard-enabled))
       (message "Internal Laptop keyboard: %s" kb-enable))))
 
