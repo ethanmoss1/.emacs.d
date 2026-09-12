@@ -48,6 +48,10 @@
 
   ;; Set the default keyboard state
   (setq my/laptop-keyboard-enabled t)
+  (setq my/laptop-keyboard-name (pcase my-hostname
+                                  ("macbook" "Apple Inc. Apple Internal Keyboard / Trackpad")
+                                  ("thinkpad" "AT Translated Set 2 Keyboard")))
+
 
   ;; Toggle keyboard function
   (defun my/toggle-laptop-keyboard ()
