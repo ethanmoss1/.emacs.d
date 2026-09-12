@@ -48,7 +48,7 @@ Returns the secret string if found, otherwise returns nil and displays an error 
          (gptel-post-response-functions . gptel-end-of-response))
   :config
   (setopt gptel-default-mode 'markdown-mode
-          gptel-model 'gemini-flash-lite-latest
+          gptel-model 'gemini-flash-latest
           gptel-backend (gptel-make-gemini "Gemini"
                           :key (funcall 'get-gemini-key)
                           :stream t))
