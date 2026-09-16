@@ -27,17 +27,18 @@
 (defun my/org-replace-ids (id1 id2 &optional dir)
   "Search DIRECTORY for files and replace occurrences of ID1 with ID2.
 Executes an asynchronous find and sed command, redirecting output
-to the '* ID replacement*' buffer."
+to the '*ID replacement*' buffer, and lists the modified files."
   (interactive "sTarget ID (old): \nsReplacement ID (new): ")
   (let* ((expanded-dir (or dir (expand-file-name org-directory)))
          (shell-dir (shell-quote-argument expanded-dir))
          (shell-id1 (shell-quote-argument id1))
          (shell-id2 (shell-quote-argument id2))
-         ;; Construct the command string
-         (cmd (format "find %s -type f -exec sed -i 's/%s/%s/g' {} +"
-                      shell-dir shell-id1 shell-id2)))
+         ;; Construct a command that uses grep to find files containing the ID,
+         ;; runs sed on them, and prints the names of the modified files.
+         (cmd (format "find %s -type f -exec grep -l %s {} + | while read -r file; do sed -i 's/%s/%s/g' \"$file\" && echo \"Modified: $file\"; done"
+                      shell-dir shell-id1 shell-id1 shell-id2)))
     ;; Execute asynchronously
-    (async-shell-command cmd)))
+    (async-shell-command cmd "*ID replacement*")))
 
 (use-package org-roam
   :after (org)
@@ -85,6 +86,3 @@ to the '* ID replacement*' buffer."
   :config (consult-org-roam-mode t))
 
 ;;; orgroam.el ends here
-
-
-

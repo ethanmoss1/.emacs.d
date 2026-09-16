@@ -52,7 +52,6 @@
                                   ("macbook" "Apple Inc. Apple Internal Keyboard / Trackpad")
                                   ("thinkpad" "AT Translated Set 2 Keyboard")))
 
-
   ;; Toggle keyboard function
   (defun my/toggle-laptop-keyboard ()
     "Toggles the intergrated keyboard on my Macbook Pro"
