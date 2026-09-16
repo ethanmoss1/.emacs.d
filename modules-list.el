@@ -91,7 +91,7 @@
    ;; "citar"
    ;; "citar-org-roam"
    ;; "zotra"
-   ;; "pdf-tools"
+   "pdf-tools"
 
    ;; -- News and Email --
    ;; "elfeed"
