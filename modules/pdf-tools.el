@@ -20,12 +20,8 @@
 ;;; Code :
 
 (use-package pdf-tools
-  :if (display-graphic-p)
   :hook (elpaca-after-init . pdf-tools-install)
   :config
   (setopt pdf-view-display-size 'fit-page))
 
 ;;; pdf-tools.el ends here
-
-
-
