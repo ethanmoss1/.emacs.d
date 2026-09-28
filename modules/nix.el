@@ -19,44 +19,46 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
-
-;; (defun nixos-edit-config ()
-;;   "Edit the nixos config file"
-;;   (interactive)
-;;   (if (string= my-hostname "mac")
-;;       (find-file "/Users/ethan/.config/nix-darwin")
-;;     (find-file "/home/ethan/.config/nixos")))
-
-;; Run a nice buffer with the output of the nix rebuild
-;; TODO: move the directory of the nix files to a variable that can change
-;; (defun nixos-rebuild-config ()
-;;   "Rebuild the system nixos rebuild"
-;;   (interactive)
-;;   (pcase my-hostname
-;;     ("mac"   (compile "darwin-rebuild switch --flake /Users/ethan/.config/nix-darwin" t))
-;;     ("laptop" (let ((default-directory "/sudo::"))
-;;                 (compile "nixos-rebuild switch --flake /home/ethan/.config/nixos")))
-;;     (_       (message "No compile command for this host: %s" my-hostname))))
-
-;; (add-to-list 'display-buffer-alist
-;; 			 '("^*comp"
-;;                (display-buffer-reuse-window display-buffer-below-selected)
-;;                (window-height . 0.33)
-;;                (window-parameters
-;;                 (no-delete-other-windows . t))))
-
+;; Dependencies:
 (use-package reformatter)
 
 (use-package nix-mode
   :after (reformatter)
   :hook ((nix-mode . eglot-ensure))
-  ;; :custom
-  ;; (lsp-disabled-clients '((nix-mode . nix-nil))) ;; Disable nil so that nixd will be used as lsp-server
   :config
-  (setq lsp-nix-nixd-server-path "nixd"
-        lsp-nix-nixd-formatting-command [ "nixfmt" ]
-        lsp-nix-nixd-nixpkgs-expr "import <nixpkgs> { }"
-        lsp-nix-nixd-nixos-options-expr "(builtins.getFlake \"/home/ethan/.config/nixos\").nixosConfigurations.macbook-pro.options"
-        lsp-nix-nixd-home-manager-options-expr "(builtins.getFlake \"home/ethan/.config/nixos\").nixosConfigurations.macbook-pro.options.home-manager.users.type.getSubOptions []"))
+  ;; Eglot
+  ;; (setq-default eglot-workspace-configuration
+  ;;               '((nixd
+  ;;                  (nixpkgs
+  ;;                   (expr . "import <nixpkgs> {}"))
+  ;;                  (formatting
+  ;;                   (command . ["nixfmt"]))
+  ;;                  (options
+  ;;                   (home-manager
+  ;;                    (expr . "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.thinkpad.options.home-manager.users.type.getSubOptions []"))))))
+  )
+
+(use-package emacs
+  :ensure nil
+  :after (embark)
+  :hook (nix-mode . my/nix-setup-embark)
+  :init
+  (defun my/nix-open-file-or-default (file)
+    "Open FILE, redirecting to default.nix if FILE is a directory containing it."
+    (interactive "FFile: ")
+    (let* ((expanded (expand-file-name file))
+           (default-nix (expand-file-name "default.nix" expanded)))
+      (if (and (file-directory-p expanded)
+               (file-regular-p default-nix))
+          (find-file default-nix)
+        (find-file expanded))))
+
+  ;; (define-key embark-file-map (kbd "N") #'my/nix-open-file-or-default)
+
+  (defun my/nix-setup-embark ()
+    "Locally override default embark file action for `nix-mode` buffers."
+    (setq-local embark-default-action-overrides
+                (cons '(file . my/nix-open-file-or-default)
+                      embark-default-action-overrides))))
 
 ;;; nix.el ends here
