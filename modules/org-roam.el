@@ -47,10 +47,9 @@ to the '*ID replacement*' buffer, and lists the modified files."
 
          ("C-c r l" . 'org-roam-buffer-toggle)
          ("C-c r f" . 'org-roam-node-find)
-         ("C-c r g" . 'org-roam-ui-open)
          ("C-c r i" . 'org-roam-node-insert)
          ("C-c r c" . 'org-roam-capture)
-         ("C-c r s" . 'org-roam-node-grep)
+         ("C-c r g" . 'org-roam-node-grep)
 
          ("C-c r t" . 'org-roam-tag-add)
          ("C-c r a" . 'org-roam-alias-add))
