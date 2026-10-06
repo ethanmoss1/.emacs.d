@@ -64,8 +64,8 @@
    ;; Agenda related
    "org-contrib"
    "org-protocol"
-   "org-export-icalendar"
-   "org-gtasks"
+   ;; "org-export-icalendar"
+   ;; "org-gtasks"
 
    ;; Links
    "org-link-man"
