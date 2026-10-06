@@ -51,17 +51,22 @@ Returns the secret string if found, otherwise returns nil and displays an error 
           gptel-model 'gemini-flash-latest
           gptel-backend (gptel-make-gemini "Gemini"
                           :key (funcall 'get-gemini-key)
-                          :stream t))
+                          :stream t)))
 
-  ;; Display buffer alist
-  ;; (add-to-list 'display-buffer-alist
-  ;;              '("\\*gemini\\*"
-  ;;                (display-buffer-in-side-window)
-  ;;                (side . bottom)
-  ;;                (slot . -1) ;; -1 == L  0 == Mid 1 == R
-  ;;                (window-height . 0.33) ;; take 2/3 on bottom left
-  ;;                (window-parameters
-  ;;                 (no-delete-other-windows . nil))))
-  )
+(use-package gptel-agent
+  :ensure t
+  :config (gptel-agent-update))
+
+
+;; Display buffer alist
+;; (add-to-list 'display-buffer-alist
+;;              '("\\*gemini\\*"
+;;                (display-buffer-in-side-window)
+;;                (side . bottom)
+;;                (slot . -1) ;; -1 == L  0 == Mid 1 == R
+;;                (window-height . 0.33) ;; take 2/3 on bottom left
+;;                (window-parameters
+;;                 (no-delete-other-windows . nil))))
+
 
 ;;; gptel.el ends here
