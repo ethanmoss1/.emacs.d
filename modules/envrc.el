@@ -21,9 +21,10 @@
 ;;; Code:
 
 (use-package envrc
-  :hook (elpaca-after-init . envrc-global-mode))
+  :hook (elpaca-after-init . envrc-global-mode)
+  :config
+  (setopt envrc-async 2
+          envrc-debug t
+          envrc-show-summary-in-minibuffer t))
 
 ;;; envrc.el ends here
-
-
-
