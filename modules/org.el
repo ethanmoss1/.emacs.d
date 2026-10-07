@@ -64,7 +64,7 @@
           (let ((cat (get-text-property (point) 'org-category)))
             (when (and cat (not (string= cat last-cat)))
               (setq last-cat cat)
-              (insert (propertize (format "\n  %s\n" (capitalize cat))
+              (insert (propertize (format "\n %s\n" (capitalize cat))
                                   'face '(:weight bold :inherit org-agenda-structure)))))
           (forward-line 1))))))
 
@@ -83,7 +83,7 @@ Level 3 is the base level, each level after is indented further."
                             (goto-char target)
                             (org-outline-level))))))
           (when (and level (>= level 3))
-            (let ((indent (make-string (+ 4 (* 2 (- level 3))) ?\s)))
+            (let ((indent (make-string (+ 2 (* 2 (- level 3))) ?\s)))
               (beginning-of-line)
               (skip-chars-forward " ")
               (insert (delete-and-extract-region (line-beginning-position) (point))
@@ -173,6 +173,13 @@ Otherwise will return NIL"
   "Select a project and navigate to its Todos heading for capture."
   (my/org-capture-project-insert "Todos"))
 
+(defun my/org-refile-check-file-level ()
+  "Filter refile targets by `#+PROPERTY: REFILE_LEVEL <N>` if defined."
+  (let ((required-level (org-entry-get nil "REFILE_LEVEL" t)))
+    (if required-level
+        (= (org-current-level) (string-to-number required-level))
+      t)))
+
 ;;;; Use-package ---------------------------------------------------------------
 
 (use-package s)
@@ -182,7 +189,7 @@ Otherwise will return NIL"
   :after s
   :hook ((org-mode . my/org-mode-hook)
          (org-agenda-mode  . hl-line-mode)
-         ;; (org-agenda-finalize-hook . my/org-agenda-group-by-category)
+         (org-agenda-finalize-hook . my/org-agenda-group-by-category)
          ;; (org-agenda-finalize-hook . my/org-agenda-indent-todos)
          )
 
@@ -287,7 +294,7 @@ Otherwise will return NIL"
                                  "......" "────────────────")
           org-agenda-tags-column -100
           org-agenda-block-separator ?─
-          org-agenda-compact-blocks t
+          ;; org-agenda-compact-blocks t
           org-enforce-todo-dependencies t
           org-agenda-dim-blocked-tasks 'invisible
           org-agenda-show-future-repeats 'next
@@ -312,26 +319,27 @@ Otherwise will return NIL"
              ((agenda "")
 
               (tags "LEVEL=1"
-                    ((org-agenda-overriding-header "\n Inbox (Refile)\n")
+                    ((org-agenda-overriding-header "Inbox")
                      (org-agenda-files '("inbox.org"))))
 
-              (tags-todo "-someday-project/-TODO"
-                         ((org-agenda-overriding-header "\n General Todos\n")
+              (tags-todo "-someday-project/TODO"
+                         ((org-agenda-overriding-header "Todos")
                           (org-agenda-skip-function
                            '(org-agenda-skip-entry-if 'scheduled 'deadline))))
 
               (tags "LEVEL>=2+project"
-                    ((org-agenda-overriding-header "\n Projects\n")
-                     (org-agenda-sorting-strategy '(category-keep))
-                     (org-agenda-prefix-format "")
+                    ((org-agenda-overriding-header "Projects")
+                     ;; (org-agenda-sorting-strategy '(category-keep))
+                     ;; (org-agenda-prefix-format "")
                      (org-agenda-skip-function
                       '(org-agenda-skip-entry-if 'nottodo '("TODO" "NEXT")))))
 
               (tags "note"
-                    ((org-agenda-overriding-header "\n Notes\n")
+                    ((org-agenda-overriding-header "Notes")
                      (org-agenda-skip-function
                       '(org-agenda-skip-entry-if 'todo 'any)))))
-             ((org-agenda-remove-tags t)))
+             ((org-agenda-remove-tags t)
+              (org-agenda-prefix-format "  ")))
 
             ("d" "Agenda (old)"
              ((agenda ""
@@ -366,9 +374,14 @@ Otherwise will return NIL"
   ;; Refiling options
   (setopt org-outline-path-complete-in-steps nil
           org-refile-use-outline-path 'file
-          org-refile-targets '((org-agenda-files :maxlevel . 2)
-                               ;; (org-agenda-files-all :maxlevel . 1)
-                               ))
+          org-refile-targets '((nil :maxlevel . 3)
+                               ("calendar.org" :level . 1)
+                               ("habits.org" :level . 0)
+                               ("inbox.org" :level . 0)
+                               ("notes.org" :level . 0)
+                               ("projects.org" :level . 2)
+                               ("somedaymaybe.org" :level . 0)
+                               ("todo.org" :level . 0)))
 
   ;; -- ORG CAPTURE CONFIGURATION --
   (setopt org-todo-keywords '("TODO(t)" "NEXT(n!/!)" "|" "DONE(d@)" "CANCELLED(c@)"))
