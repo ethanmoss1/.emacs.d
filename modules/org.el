@@ -22,7 +22,7 @@
 
 ;;;; Org Related functions -----------------------------------------------------
 
-(defun org-latex-preview-buffer ()
+(defun org-latex-generate-previews-buffer ()
   "Generate the previews of all latex fragments in the buffer"
   (interactive)
   (org-latex-preview '(16)))
@@ -52,26 +52,56 @@
   (if (fboundp 'org-appear-mode)
       (org-appear-mode t)))
 
+(defun my/org-agenda-group-by-category ()
+  "Insert project category headers dynamically into the agenda buffer."
+  (save-excursion
+    (goto-char (point-min))
+    (when (search-forward "Project" nil t)
+      (forward-line 1)
+      (let ((inhibit-read-only t)
+            (last-cat ""))
+        (while (not (eobp))
+          (let ((cat (get-text-property (point) 'org-category)))
+            (when (and cat (not (string= cat last-cat)))
+              (setq last-cat cat)
+              (insert (propertize (format "\n  %s\n" (capitalize cat))
+                                  'face '(:weight bold :inherit org-agenda-structure)))))
+          (forward-line 1))))))
+
+(defun my/org-agenda-indent-todos ()
+  "Indent todos under categories based on their outline level.
+Level 3 is the base level, each level after is indented further."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((inhibit-read-only t))
+      (while (not (eobp))
+        (let* ((target (or (get-text-property (point) 'org-marker)
+                           (get-text-property (point) 'org-hd-marker)))
+               (level (when target
+                        (with-current-buffer (marker-buffer target)
+                          (save-excursion
+                            (goto-char target)
+                            (org-outline-level))))))
+          (when (and level (>= level 3))
+            (let ((indent (make-string (+ 4 (* 2 (- level 3))) ?\s)))
+              (beginning-of-line)
+              (skip-chars-forward " ")
+              (insert (delete-and-extract-region (line-beginning-position) (point))
+                      indent))))
+        (forward-line 1)))))
+
 ;; TODO: Make sure this is correct and runs as expected.
 (defun my/org-mode-hook ()
   "My custom org-mode hook."
-  (unless (and org-refile-targets
-               (bound-and-true-p org-agenda-mode)
-               org-agenda-files)
+  (unless
+      (and
+       org-refile-targets
+       (bound-and-true-p org-agenda-mode)
+       org-agenda-files)
     ;; Your hooks here (e.g., enable specific modes, set variables, etc.)
     (message "Running my org-mode hooks.")
     (my/load-minor-modes-for-org)
     ))
-
-(defun my/add-latex-block ()
-  "Adds a latex block ready for input"
-  (interactive)
-  (end-of-line)
-  (newline-and-indent)
-  (insert "\\[")
-  (newline-and-indent 2)
-  (insert "\\]")
-  (previous-line))
 
 (defun my/org-agenda-with-groups ()
   "Open org-agenda and all TODOs"
@@ -98,30 +128,70 @@ Otherwise will return NIL"
   (interactive)
   (consult-grep org-directory))
 
+(defvar my/org-selected-project nil
+  "Temporarily holds the selected project name during capture.")
+
+(defun my/org-get-project-headlines ()
+  "Return a list of top-level project titles from projects.org."
+  (with-current-buffer (find-file-noselect (expand-file-name "projects.org" org-directory))
+    (org-element-map (org-element-parse-buffer 'headline) 'headline
+      (lambda (hl)
+        (when (= (org-element-property :level hl) 1)
+          (org-element-property :raw-value hl))))))
+
+(defun my/org-capture-select-project ()
+  "Prompt user to select a project and store it."
+  (let ((headlines (my/org-get-project-headlines)))
+    (unless headlines
+      (error "No projects found in projects.org"))
+    (setq my/org-selected-project
+          (completing-read "Select Project: " headlines nil t))))
+
+(defun my/org-capture-project-target-heading (heading)
+  "Position point at the end of HEADING under the selected project in projects.org."
+  (let ((proj my/org-selected-project))
+    (widen)
+    (goto-char (point-min))
+    (unless (re-search-forward (format "^\\* %s" (regexp-quote proj)) nil t)
+      (error "Project %s not found in projects.org" proj))
+    (org-narrow-to-subtree)
+    (goto-char (point-min))
+    (unless (re-search-forward (format "^\\*\\* %s" (regexp-quote heading)) nil t)
+      (error "Heading %s not found under project %s" heading proj))
+    (beginning-of-line)))
+
+(defun my/org-capture-project-insert (heading)
+  "Select a project and navigate to the specified HEADING under it."
+  (my/org-capture-select-project)
+  (my/org-capture-project-target-heading heading))
+
+(defun my/org-capture-project-insert-notes ()
+  "Select a project and navigate to its Notes heading for capture."
+  (my/org-capture-project-insert "Notes"))
+
+(defun my/org-capture-project-insert-todos ()
+  "Select a project and navigate to its Todos heading for capture."
+  (my/org-capture-project-insert "Todos"))
+
 ;;;; Use-package ---------------------------------------------------------------
 
-;; Requires ‘s’ ?
 (use-package s)
+
 (use-package org
   :ensure nil
   :after s
   :hook ((org-mode . my/org-mode-hook)
          (org-agenda-mode  . hl-line-mode)
-         ;; Clean tags on refile
-         (org-after-refile-insert . my/org-clean-tags))
-  :bind (;; Global keybindings
-         ("C-c o a" . 'my/org-agenda-with-groups)
+         ;; (org-agenda-finalize-hook . my/org-agenda-group-by-category)
+         ;; (org-agenda-finalize-hook . my/org-agenda-indent-todos)
+         )
+
+  :bind (("C-c o a" . 'my/org-agenda-with-groups)
 		 ("C-c o c" . 'org-capture)
          ("C-c o s" . 'my/org-files-grep)
-         ;; Mapped keybindings
          :map org-mode-map
-         ;; ("C-c C-x C-f" . my/org-emphasis-map)
-         ("C-," . nil) ;; Removed for embark, use C-’
+         ("C-," . nil) ;; Conflicts with embark
          )
-  :custom
-  ;; Org Export
-  (org-odt-preferred-output-format "docx")  ; Make ODT export as docx
-
   :config
    ;;; -- GENERAL ORG SETUP --
   (org-babel-do-load-languages 'org-babel-load-languages
@@ -132,14 +202,17 @@ Otherwise will return NIL"
 								 (shell . t)
 								 (C . t)))
 
+  ;; Org Export
+  (setopt org-odt-preferred-output-format "docx")  ; Make ODT export as docx
+
+
   ;; Colour the output of org babel bash results using the escape codes.
   (defun my/org-babel-ansi-color-filter ()
-  "Apply ANSI colour codes to Org Babel output."
-  (when (string-match-p "bash" (car (org-babel-get-src-block-info)))
-    (ansi-color-apply-on-region (point-min) (point-max))))
+    "Apply ANSI colour codes to Org Babel output."
+    (when (string-match-p "bash" (car (org-babel-get-src-block-info)))
+      (ansi-color-apply-on-region (point-min) (point-max))))
 
   (add-hook 'org-babel-after-execute-hook 'my/org-babel-ansi-color-filter)
-
 
   ;; Org Visuals
   (setopt org-hide-emphasis-markers nil
@@ -203,14 +276,21 @@ Otherwise will return NIL"
   (setopt org-directory "~/Documents/org/"
           org-default-notes-file (concat org-directory "notes.org")
           org-agenda-files (directory-files org-directory t "\\.org$")
-          org-agenda-files-and-study (append (directory-files org-directory t "\\.org$")
-                                             (directory-files-recursively "~/Documents/study" "\\.org$")
-                                             ;; (directory-files (concat org-directory "google/tasks") t "\\.org$")
-                                             )
-          org-agenda-files-all (directory-files-recursively "~/Documents" "\\.org$"))
-
-  ;; Org-agenda settings
-  (setopt org-agenda-show-future-repeats 'next
+          org-agenda-files-and-study (append
+                                      (directory-files org-directory t "\\.org$")
+                                      (directory-files-recursively "~/Documents/study" "\\.org$"))
+          org-agenda-files-all (directory-files-recursively "~/Documents" "\\.org$")
+          org-agenda-breadcrumbs-separator " ❯ "
+          org-agenda-current-time-string "── now ─────────"
+          org-agenda-time-grid '((daily today require-timed)
+                                 (0800 1000 1200 1400 1600 1800 2000)
+                                 "......" "────────────────")
+          org-agenda-tags-column -100
+          org-agenda-block-separator ?─
+          org-agenda-compact-blocks t
+          org-enforce-todo-dependencies t
+          org-agenda-dim-blocked-tasks 'invisible
+          org-agenda-show-future-repeats 'next
           org-agenda-include-diary nil
           org-agenda-span 10
           org-agenda-start-on-weekday nil
@@ -228,8 +308,32 @@ Otherwise will return NIL"
 
   ;; Setting up the agenda views
   (setopt org-agenda-custom-commands
-          '(("n"       ; Key
-             "Agenda"  ; Description
+          '(("n" "Dashboard"
+             ((agenda "")
+
+              (tags "LEVEL=1"
+                    ((org-agenda-overriding-header "\n Inbox (Refile)\n")
+                     (org-agenda-files '("inbox.org"))))
+
+              (tags-todo "-someday-project/-TODO"
+                         ((org-agenda-overriding-header "\n General Todos\n")
+                          (org-agenda-skip-function
+                           '(org-agenda-skip-entry-if 'scheduled 'deadline))))
+
+              (tags "LEVEL>=2+project"
+                    ((org-agenda-overriding-header "\n Projects\n")
+                     (org-agenda-sorting-strategy '(category-keep))
+                     (org-agenda-prefix-format "")
+                     (org-agenda-skip-function
+                      '(org-agenda-skip-entry-if 'nottodo '("TODO" "NEXT")))))
+
+              (tags "note"
+                    ((org-agenda-overriding-header "\n Notes\n")
+                     (org-agenda-skip-function
+                      '(org-agenda-skip-entry-if 'todo 'any)))))
+             ((org-agenda-remove-tags t)))
+
+            ("d" "Agenda (old)"
              ((agenda ""
                       ((org-agenda-remove-tags t)))
               (tags-todo "+new"
@@ -267,44 +371,125 @@ Otherwise will return NIL"
                                ))
 
   ;; -- ORG CAPTURE CONFIGURATION --
-  ;; Capture time entered and exited ‘NEXT’ as well as any notes for when
-  ;; changing the state to ‘DONE’
   (setopt org-todo-keywords '("TODO(t)" "NEXT(n!/!)" "|" "DONE(d@)" "CANCELLED(c@)"))
 
-  ;; Various templates for different uses. if there is a special usage, it will
-  ;; be noted above each template.
   (setopt org-capture-templates
-          `(;; Standard input to inbox
-            ("i" "Inbox" entry
-             (file+headline "inbox.org" "todo")  ; target
-			 ,(s-join "\n" '("** TODO %?" ":PROPERTIES:" ":ENTERED: %U"
-                             ":FILE: [[%f]]" ":LINK: %a" ":END:")))
+          `(("i" "Quick Task" entry
+             (file "inbox.org")
+             ,(s-join "\n"
+                      '("* TODO %?"
+                        ":PROPERTIES:"
+                        ":FILE: [[%f]]"
+                        ":LINK: %a"
+                        ":END:"
+                        "%U"))
+             :immediate-finish t)
 
-            ;; Notes for on the fleeting thoughts
+            ("n" "Quick Note" entry
+             (file "notes.org")
+             ,(s-join "\n"
+                      '("* %? :note:"
+                        ":PROPERTIES:"
+                        ":FILE: [[%f]]"
+                        ":LINK: %a"
+                        ":END:"
+                        "%U"
+                        " %i"))
+             :immediate-finish t)
+
+            ("a" "Calendar Appointment" entry
+             (file "calendar.org")
+             ,(s-join "\n"
+                      '("* %?"
+                        "SCHEDULED: %^T"
+                        ":PROPERTIES:"
+                        ":END:"
+                        "%U"
+                        "Context: %i")))
+
+            ("t" "Detailed Task" entry
+             (file "todo.org")
+             ,(s-join "\n"
+                      '("* TODO %?"
+                        "SCHEDULED: %^t"
+                        ":PROPERTIES:"
+                        ":EFFORT: %^{Effort (mins)|15|30|60}"
+                        ":FILE: [[%f]]"
+                        ":LINK: %a"
+                        ":END:"
+                        "%U"
+                        "%i"
+                        "%a")))
+
+            ("p" "Project Management Submenu")
+
+            ("pp" "New Project" plain
+             (file "projects.org")
+             ,(s-join "\n"
+                      '("* %^{Project Name}"
+                        ":PROPERTIES:"
+                        ":CATEGORY: %^{Category/Slug}"
+                        ":ORDERED:  t"
+                        ":END:"
+                        "%U"
+                        "%^{Description}"
+                        "** Notes"
+                        "** Todos [%]"))
+             :empty-lines 1)
+
+            ("pt" "Project Task" entry
+             (file+function "projects.org" my/org-capture-project-insert-todos)
+             ,(s-join "\n"
+                      '("* TODO %?"
+                        "%U"
+                        "%a"
+                        "%i"))
+             :empty-lines 1)
+
+            ("pn" "Project Note" entry
+             (file+function "projects.org" my/org-capture-project-insert-notes)
+             ,(s-join "\n"
+                      '("* %? :note:"
+                        ":PROPERTIES:"
+                        ":FILE: [[%f]]"
+                        ":LINK: %a"
+                        ":END:"
+                        "%U"
+                        "%i"))
+             :empty-lines 1)
+
+            ("s" "Someday / Maybe Idea" entry
+             (file "someday.org")
+             ,(s-join "\n"
+                      '("* %?"
+                        ":PROPERTIES:"
+                        ":CREATED:  %U"
+                        ":FILE: [[%f]]"
+                        ":LINK: %a"
+                        ":END:"
+                        "%U"
+                        "%i")))
+
             ("j" "Journal Entry" entry
              (file+olp+datetree
-              ,(format-time-string "journal/%Y_journal.org" (current-time))
-              )
-             "* %?")
-
-            ;; Notes for on the fleeting thoughts
-            ("n" "Notes" entry
-             (file+headline "inbox.org" "notes")
-             ,(s-join "\n" '("** %? %^G" ":PROPERTIES:" ":ENTERED: %U"
-                             ":FILE: [[%f]]" ":LINK: %a" ":END:")))
+              ,(format-time-string "journal/%Y_journal.org" (current-time)))
+             "* %?\n%U")
 
             ;; This is for Org-protocol. It allows for taking the links and
             ;; highlighted text and putting it into my inbox notes.
             ("w" "Web site" entry
              (file+headline "inbox.org" "notes")
-             ,(s-join "\n" '("* LINK %?" ":PROPERTIES:" ":ENTERED: %U"
-                             ":LINK: %a" ":END:" "" "%:initial")))))
+             ,(s-join "\n" '("* LINK %?"
+                             ":PROPERTIES:"
+                             ":LINK: %a"
+                             ":END:"
+                             "%U"
+                             "%:initial")))))
 
   ;;; -- ORG REFERENCING ---
   (setopt org-cite-global-bibliography (list (expand-file-name
                                               "ref/references.bib"
                                               org-directory)))
-
 
   ;;; -- ORG UI AND DISPLAY CONFIGURATION --
   ;; Set up org buffer views:
