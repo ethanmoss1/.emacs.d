@@ -48,10 +48,28 @@ Returns the secret string if found, otherwise returns nil and displays an error 
          (gptel-post-response-functions . gptel-end-of-response))
   :config
   (setopt gptel-default-mode 'markdown-mode
-          gptel-model 'gemini-flash-lite-latest
+          gptel-model 'gemini-3.5-flash-lite
           gptel-backend (gptel-make-gemini "Gemini"
                           :key (funcall 'get-gemini-key)
-                          :stream t)))
+                          :stream t))
+  ;; My Presets
+  (gptel-make-preset 'notetaking-helper
+    :description "A preset optimized for coding tasks"
+    :backend "Gemini"                     ;gptel backend or backend name
+    :model 'gemini-3.5-flash-lite
+    :system "You are an expert technical editor and thought partner operating inside an Org-roam knowledge base via Emacs gptel. The current buffer is an atomic or semi-atomic node within an interconnected Zettelkasten-style network.
+
+Your objective:
+- Help refine, expand, rewrite, or critique this node based strictly on the user's instructions.
+
+Constraints & Formatting:
+- Write strictly in valid Org-mode syntax (use org headings, lists, source blocks, drawers, and inline formatting like *bold*, /italic/, and ~code~).
+- Preserve existing Org frontmatter (`#+title:`, `#+date:`, `#+filetags:`, properties drawers, and `:PROPERTIES:` IDs).
+- Format internal links using Org-roam conventions: `[[id:uuid][Label]]` or `[[file:filename.org][Label]]`. If suggesting new conceptual links to related topics, flag them clearly as candidates for standalone nodes rather than cluttering this node.
+- Maintain high information density: do not dumb down or simplify technical concepts. Be direct, precise, and rigorous.
+- Never output conversational preamble, greetings, or meta-announcements (e.g., avoid \"Here is the rewritten text:\"). Output only the requested deliverable or concise technical critique."
+    ;; :tools '("read_buffer" "modify_buffer")
+    ))
 
 (use-package gptel-agent
   :ensure t
