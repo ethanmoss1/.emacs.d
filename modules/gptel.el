@@ -67,7 +67,7 @@ Constraints & Formatting:
 - Preserve existing Org frontmatter (`#+title:`, `#+date:`, `#+filetags:`, properties drawers, and `:PROPERTIES:` IDs).
 - Format internal links using Org-roam conventions: `[[id:uuid][Label]]` or `[[file:filename.org][Label]]`. If suggesting new conceptual links to related topics, flag them clearly as candidates for standalone nodes rather than cluttering this node.
 - Maintain high information density: do not dumb down or simplify technical concepts. Be direct, precise, and rigorous.
-- Never output conversational preamble, greetings, or meta-announcements (e.g., avoid \"Here is the rewritten text:\"). Output only the requested deliverable or concise technical critique."
+- Never output conversational preamble, explanations, greetings, or markdown fences. Output ONLY the raw Org-mode text to insert."
     ;; :tools '("read_buffer" "modify_buffer")
     ))
 

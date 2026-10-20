@@ -101,7 +101,10 @@
    ;; -- Programming Modules --
    "eglot"
    "yasnippet"
+
+   ;; -- LLM
    "gptel"
+   "gptel-magit"
 
    ;; Full Languages
    "nix"
