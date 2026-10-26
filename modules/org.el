@@ -199,6 +199,8 @@ Otherwise will return NIL"
          :map org-mode-map
          ("C-," . nil) ;; Conflicts with embark
          )
+  :custom
+  (org-odt-preferred-output-format "docx")  ; Make ODT export as docx
   :config
    ;;; -- GENERAL ORG SETUP --
   (org-babel-do-load-languages 'org-babel-load-languages
@@ -208,10 +210,6 @@ Otherwise will return NIL"
 								 ;; (maxima . t)
 								 (shell . t)
 								 (C . t)))
-
-  ;; Org Export
-  (setopt org-odt-preferred-output-format "docx")  ; Make ODT export as docx
-
 
   ;; Colour the output of org babel bash results using the escape codes.
   (defun my/org-babel-ansi-color-filter ()
@@ -396,7 +394,8 @@ Otherwise will return NIL"
                         ":LINK: %a"
                         ":END:"
                         "%U"))
-             :immediate-finish t)
+             ;; :immediate-finish t
+             )
 
             ("n" "Quick Note" entry
              (file "notes.org")
@@ -408,7 +407,8 @@ Otherwise will return NIL"
                         ":END:"
                         "%U"
                         " %i"))
-             :immediate-finish t)
+             ;; :immediate-finish t
+             )
 
             ("a" "Calendar Appointment" entry
              (file "calendar.org")
